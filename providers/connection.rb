@@ -102,6 +102,10 @@ action :setup do
 
     property = method.to_s.gsub("_set_or_return_","")
     value = new_resource.send(property.to_sym)
+
+    Chef::Log.warn("PROP: #{property}")
+    Chef::Log.warn("VALUE: #{value}")
+    sleep 3
     next memo if value.nil?
 
     memo[property] = value
