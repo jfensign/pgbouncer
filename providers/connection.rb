@@ -93,6 +93,11 @@ action :setup do
   # the methods seems to be the best way to find the declared attributes
   #
   properties = new_resource.methods.inject({}) do |memo, method|
+
+    Chef::Log.warn("MEMO: #{memo}")
+    Chef::Log.warn("Method: #{method.to_s}")
+    sleep 3
+
     next memo unless method.to_s =~ /\_set\_or\_return_.*/
 
     property = method.to_s.gsub("_set_or_return_","")
