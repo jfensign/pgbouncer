@@ -92,23 +92,18 @@ action :setup do
   # _set_or_return_* methods for every attribute, so iterating over
   # the methods seems to be the best way to find the declared attributes
   #
+
   properties = new_resource.methods.inject({}) do |memo, method|
+    #next memo unless method.to_s =~ /\_set\_or\_return_.*/
 
-    Chef::Log.warn("MEMO: #{memo}")
-    Chef::Log.warn("Method: #{method.to_s}")
-    sleep 3
+    next memo unless %w(server_reset_query server_idle_timeout reserve_pool_size min_pool_size default_pool_size pid_dir max_client_conn pool_mode db_alias db_password db_port db_host db_name userlist max_client_conn default_pool_size action).include? method.to_s
 
-    next memo unless method.to_s =~ /\_set\_or\_return_.*/
+    value = new_resource.send(method.to_sym)
 
-    property = method.to_s.gsub("_set_or_return_","")
-    value = new_resource.send(property.to_sym)
-
-    Chef::Log.warn("PROP: #{property}")
-    Chef::Log.warn("VALUE: #{value}")
-    sleep 3
     next memo if value.nil?
 
-    memo[property] = value
+
+    memo[method] = value
     memo
   end
 

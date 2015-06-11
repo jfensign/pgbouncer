@@ -71,6 +71,7 @@ pool_mode = <%= @pool_mode %>
 ;
 ; Empty if transaction pooling is in use.
 ;
+
 server_reset_query = <%= @server_reset_query %>
  
 ; Comma-separated list of parameters to ignore when given
@@ -129,7 +130,7 @@ server_round_robin = 1
  
 ;; Close server connection if its not been used in this time.
 ;; Allows to clean unnecessary connections from pool after peak.
-server_idle_timeout = <%= @server_idle_timeout %>
+;server_idle_timeout = <%= @server_idle_timeout %>
  
 ;; Cancel connection attempt if server does not answer takes longer.
 ;server_connect_timeout = 15
